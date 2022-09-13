@@ -17,7 +17,7 @@ int main()
 
 	Clock clock;
 	RectangleShape shape_drawn;
-	shape_drawn.setSize(sf::Vector2f(1,1));
+	shape_drawn.setSize(sf::Vector2f(20,20));
 
 	bool paused = true;
 
@@ -67,9 +67,9 @@ int main()
 				window.close();
 			}
 
-			if(event.mouseButton.button == sf::Event::MouseButtonPressed)
+			if(event.type == sf::Event::MouseButtonPressed)
 			{
-				if()
+				if(event.mouseButton.button == sf::Mouse::Left)
 				{	
 					cout << "Mouse x: " << event.mouseButton.x << endl;
 					cout << "Mouse y: " << event.mouseButton.y << endl;
@@ -92,14 +92,16 @@ int main()
 
 		}
 
+
+
 		// Clear everything from the last frame
 		window.clear();
 
-
 		/* Draw the scene*/
 		window.draw(messageText);
-		shape_drawn.setPosition(0,0);
+		shape_drawn.setPosition(clicked.x,clicked.y);
 		window.draw(shape_drawn);
+
 
 		// Show everything we just drew
 		window.display();
