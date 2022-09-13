@@ -15,11 +15,8 @@ int main()
 	// Create and open a window for the game
 	RenderWindow window(vm, "Chaos Game", Style::Default);
 
-	Clock clock;
 	RectangleShape shape_drawn;
 	shape_drawn.setSize(sf::Vector2f(20,20));
-
-	bool paused = true;
 
 	// Draw some text
 
@@ -51,7 +48,8 @@ int main()
 		textRect.width / 2.0f,textRect.top + textRect.height / 2.0f);
 	messageText.setPosition(1920 / 2.0f, 1080 / 2.0f);
 
-	vector<Vector2f> vectices; /*use pushback*/
+	int vertex = 0;
+	vector<Vector2f> vertices; /*use pushback*/
 	vector<Vector2f> points;
 	Vector2f clicked;
 
@@ -66,8 +64,8 @@ int main()
 			{
 				window.close();
 			}
-
-			if(event.type == sf::Event::MouseButtonPressed)
+			//mouse input
+			if(event.type == sf::Event::MouseButtonPressed && vertex <= 3)
 			{
 				if(event.mouseButton.button == sf::Mouse::Left)
 				{	
@@ -75,6 +73,12 @@ int main()
 					cout << "Mouse y: " << event.mouseButton.y << endl;
 					clicked.x = event.mouseButton.x;
 					clicked.y = event.mouseButton.y;
+					vertex++;
+					vertices.push_back(clicked);
+					cout << "TEST";
+					cout << vertices.at(0).x;
+					cout << vertices.at(0).y;
+
 				}
 			}
 		}
@@ -92,15 +96,20 @@ int main()
 
 		}
 
-
-
 		// Clear everything from the last frame
 		window.clear();
 
 		/* Draw the scene*/
 		window.draw(messageText);
-		shape_drawn.setPosition(clicked.x,clicked.y);
-		window.draw(shape_drawn);
+		//shape_drawn.setPosition(clicked.x,clicked.y);
+
+		for(int counter = 0; counter <= 3; counter++)
+		{
+			shape_drawn.setPosition(vertices.at(counter).x,vertices.at(counter).y);
+			window.draw(shape_drawn);
+			cout << "test" << endl;
+		}
+		//window.draw(shape_drawn);
 
 
 		// Show everything we just drew
