@@ -3,7 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-// Make code easier to type with "using namespace"
+
+
 using namespace sf;
 using namespace std;
 
@@ -41,7 +42,6 @@ int main()
 	messageText.setPosition(1920 / 2.0f, 100 / 2.0f);
 
 	//Vectors
-	int vertex = 0;
 	vector<Vector2f> vertices; /*use pushback*/
 	vector<Vector2f> points;
 	Vector2f clicked;
@@ -121,7 +121,6 @@ int main()
 			}
 			window.draw(messageText);
 		}
-
 
 		// Show everything we just drew
 		window.display();
