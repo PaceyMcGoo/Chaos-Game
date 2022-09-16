@@ -3,10 +3,14 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 
 using namespace sf;
 using namespace std;
+
+Vector2f Adds_Points(vector<Vector2f>, vector<Vector2f>);
 
 int main()
 {
@@ -110,6 +114,8 @@ int main()
 				shape_drawn.setPosition(points.at(counter).x, points.at(counter).y);
 				window.draw(shape_drawn);
 			}
+			//adds midpoint to points
+			points.push_back(Adds_Points(vertices, points));
 		}
 		else if (vertices.size() >= 0) // DRAWS VERTEX UNTIL IT REACHES THE SIZE OF 3
 		{
@@ -129,4 +135,33 @@ int main()
 	}
 
 	return 0;
+}
+
+Vector2f Adds_Points(vector<Vector2f>vertices, vector<Vector2f>points)
+{
+	vector <Vector2f> new_vertices = vertices;
+	vector <Vector2f> new_points = points;
+	Vector2f mid_Point;
+
+	do {
+		//makes seed
+		srand((int)time(0));
+		int rand_vertice = (rand() % 3);
+		int rand_point = (rand() % (new_points.size()));
+
+		//Picks intial points from vectors
+		Vector2f picked_point = new_points.at(rand_point);
+		Vector2f picked_vertice = new_vertices.at(rand_vertice);
+
+		//Picks mid point
+		mid_Point.x = (picked_point.x + picked_vertice.x) / 2.0;
+		mid_Point.y = (picked_point.y + picked_vertice.y) / 2.0;
+	} while (find(new_points.begin(), new_points.end(), mid_Point) != new_points.end());
+	
+
+	
+
+	
+
+	return mid_Point;
 }
