@@ -10,7 +10,7 @@
 using namespace sf;
 using namespace std;
 
-vector<Vector2f> Adds_Points(vector<Vector2f>, vector<Vector2f>);
+void Adds_Points(vector<Vector2f>&, vector<Vector2f>&);
 
 int main()
 {
@@ -115,9 +115,9 @@ int main()
 				window.draw(shape_drawn);
 			}
 			//adds midpoint to points
-			points = Adds_Points(vertices, points);
+			Adds_Points(vertices, points);
 		}
-		else if (vertices.size() >= 0) // DRAWS VERTEX UNTIL IT REACHES THE SIZE OF 3
+		else if (vertices.size() < 4) // DRAWS VERTEX UNTIL IT REACHES THE SIZE OF 3
 		{
 			for (int counter = 0; counter < vertices.size(); counter++)
 			{
@@ -137,34 +137,36 @@ int main()
 	return 0;
 }
 
-vector<Vector2f> Adds_Points(vector<Vector2f>vertices, vector<Vector2f>points)
+void Adds_Points(vector<Vector2f> &vertices, vector<Vector2f> &points)
 {
-	vector <Vector2f> new_vertices = vertices;
-	vector <Vector2f> new_points = points;
+	//vector <Vector2f> new_vertices = vertices;
 	Vector2f mid_Point;
 	int counter = 0;
+	srand((int)time(0));
 
 	do {
 
 		//makes seed
-		srand((int)time(0));
+		
 		int rand_vertice = (rand() % 3);
-		int rand_point = (rand() % (new_points.size()));
+		int rand_point = (rand() % (points.size()));
 
 		//Picks intial points from vectors
-		Vector2f picked_point = new_points.at(rand_point);
-		Vector2f picked_vertice = new_vertices.at(rand_vertice);
+		Vector2f picked_point = points.at(rand_point);
+		Vector2f picked_vertice = vertices.at(rand_vertice);
 
 		//Picks mid point
 		mid_Point.x = (picked_point.x + picked_vertice.x) / 2.0;
 		mid_Point.y = (picked_point.y + picked_vertice.y) / 2.0;
 
-		if (find(new_points.begin(), new_points.end(), mid_Point) == new_points.end())
+		//checks if the point is already drawn
+		if (find(points.begin(), points.end(), mid_Point) == points.end())
 		{
 			counter++;
-			new_points.push_back(mid_Point);
+			points.push_back(mid_Point);
+			cout << "Picked: " << rand_vertice << endl;
 		}
-	} while (counter == 10);
+	} while (counter != 1000);
 	
-	return new_points;
+
 }
